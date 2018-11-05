@@ -19,13 +19,13 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//ul[@id='desktopMenuMain']//div[@class='main-menu__wrap']//ul[contains(@class,'main-menu__list--double-column')]")
     WebElement deliveryItems;
 
-    @FindBy(xpath="//a[@title='Перейти в корзину']")
+    @FindBy(xpath = "//a[@title='Перейти в корзину']")
     WebElement cart;
 
     public MainPage(WebDriver driver) {
         super(driver);
 
-        if (subscriptionNoButton.isDisplayed())  click(subscriptionNoButton);
+        if (subscriptionNoButton.isDisplayed()) click(subscriptionNoButton);
     }
 
     public void chooseDeliveryItem(String text) {
@@ -36,7 +36,7 @@ public class MainPage extends BasePage {
         click(mainMenuButton);
     }
 
-    public void openCart(){
+    public void openCart() {
         click(cart);
     }
 
