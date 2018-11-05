@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,14 +29,17 @@ public class MainPage extends BasePage {
         if (subscriptionNoButton.isDisplayed()) click(subscriptionNoButton);
     }
 
+    @Step("Выбираем пункт меню {0} в главном Меню Доставки")
     public void chooseDeliveryItem(String text) {
         deliveryItems.findElement(By.xpath(".//li/a[contains(text(),'" + text + "')]")).click();
     }
 
+    @Step("Раскрываем меню доставки")
     public void clickMainMenu() {
         click(mainMenuButton);
     }
 
+    @Step("Открываем Корзину")
     public void openCart() {
         click(cart);
     }

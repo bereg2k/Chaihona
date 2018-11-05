@@ -8,7 +8,6 @@
     <artifactId>Chaihona</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <properties>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <aspectj.version>1.9.1</aspectj.version>
@@ -46,6 +45,18 @@
             <version>1.8.0-beta2</version>
         </dependency>
 
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-cucumber-jvm-adaptor</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -64,8 +75,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <includes>
+                        <include>**/CucumberRunner.java</include>
+                    </includes>
                     <testFailureIgnore>false</testFailureIgnore>
-                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <properties>
                         <property>
                             <name>listener</name>

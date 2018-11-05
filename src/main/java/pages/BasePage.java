@@ -22,6 +22,11 @@ public abstract class BasePage {
     public abstract boolean isPageLoaded();
 
     WebDriver driver;
+
+    public Map<String, String> getUserOrderList() {
+        return userOrderList;
+    }
+
     Map<String, String> userOrderList = new HashMap<>();
 
     public BasePage(WebDriver driver) {
@@ -97,5 +102,9 @@ public abstract class BasePage {
 
     void saveItemPrice(WebElement name, WebElement price) {
         userOrderList.put(name.getText(), price.getText().substring(0, 3));
+    }
+
+    void openWebPage(String url){
+        driver.get(url);
     }
 }

@@ -16,6 +16,11 @@ public class CartPage extends BasePage {
         this.userOrderList = page.userOrderList;
     }
 
+    public CartPage(WebDriver driver, Map<String, String> map) {
+        super(driver);
+        this.userOrderList = map;
+    }
+
     @Override
     public boolean isPageLoaded() {
         return false;
