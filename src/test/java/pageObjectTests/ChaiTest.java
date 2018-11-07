@@ -1,3 +1,5 @@
+package pageObjectTests;
+
 import org.junit.Test;
 import pages.CartPage;
 import pages.MainPage;
@@ -11,11 +13,12 @@ public class ChaiTest extends BaseTest{
     @Test
     public void myTest() {
         MainPage mainPage = new MainPage(driver);
+        OrderPage orderPage = new OrderPage(driver);
+        CartPage cart = new CartPage(driver);
 
         mainPage.clickMainMenu();
         mainPage.chooseDeliveryItem("Бургеры и Шаурма");
 
-        OrderPage orderPage = new OrderPage(driver);
         orderPage.addToCart("Шаурма с курицей");
         orderPage.addToCart("Шаурма с телятиной");
 
@@ -26,7 +29,6 @@ public class ChaiTest extends BaseTest{
 
         mainPage.openCart();
 
-        CartPage cart = new CartPage(driver);
         cart.checkItemsInCart();
         cart.checkCartTotalSum();
         cart.clearCart();
