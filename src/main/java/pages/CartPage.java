@@ -11,23 +11,12 @@ public class CartPage extends BasePage {
 
     private int totalSum = 0;
 
-    public CartPage(WebDriver driver, BasePage page) {
+    public CartPage(WebDriver driver) {
         super(driver);
-        this.userOrderList = page.userOrderList;
-    }
-
-    public CartPage(WebDriver driver, Map<String, String> map) {
-        super(driver);
-        this.userOrderList = map;
-    }
-
-    @Override
-    public boolean isPageLoaded() {
-        return false;
     }
 
     public void checkItemsInCart() {
-        for (Object o : userOrderList.entrySet()) {
+        for (Object o : getLocker().getUserOrderList().entrySet()) {
             Map.Entry pair = (Map.Entry) o;
             assertEquals(pair.getKey().toString(), findByXpath("//tbody/tr/td[@class='product-name']/a[contains(text(),'" + pair.getKey() + "')]").getText());
             totalSum += Integer.valueOf(pair.getValue().toString());
@@ -35,18 +24,17 @@ public class CartPage extends BasePage {
     }
 
     public void checkCartTotalSum() {
-        assertEquals(String.valueOf(totalSum), findByXpath("//span[@id='cartPrice']").getText());
+        checkElementText(findByXpath("//span[@id='cartPrice']"), String.valueOf(totalSum));
     }
 
     public void clearCart() {
-        for (Object o : userOrderList.entrySet()) {
+        for (Object o : getLocker().getUserOrderList().entrySet()) {
             Map.Entry pair = (Map.Entry) o;
             click("//tbody/tr/td[@class='product-name']/a[contains(text(),'" + pair.getKey().toString() + "')]/../../td/a/span");
         }
     }
 
-    public void isEmpty() {
-        waitForVisible(By.xpath("//h2"));
-        assertEquals("Ваша корзина пуста", findByXpath("//h2").getText());
+    public void isCartEmpty() {
+        checkElementText(findByXpath("//h2"), "Ваша корзина пуста");
     }
 }

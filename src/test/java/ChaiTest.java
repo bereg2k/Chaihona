@@ -26,10 +26,10 @@ public class ChaiTest extends BaseTest{
 
         mainPage.openCart();
 
-        CartPage cart = new CartPage(driver, orderPage);
+        CartPage cart = new CartPage(driver);
         cart.checkItemsInCart();
         cart.checkCartTotalSum();
         cart.clearCart();
-        cart.isEmpty();
+        cart.isCartEmpty();
     }
 }

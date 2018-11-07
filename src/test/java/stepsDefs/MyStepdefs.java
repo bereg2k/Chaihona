@@ -11,49 +11,49 @@ import pages.OrderPage;
 /**
  * Created by student on 05.11.2018.
  */
-public class MyStepdefs extends BaseDefs {
-    WebDriver driver;
-    MainPage mainPage = new MainPage(driver);
-    OrderPage orderPage = new OrderPage(driver);
-    CartPage cartPage;
+public class MyStepdefs {
+    private WebDriver driver = Hooks.driver;
+    private MainPage mainPage = new MainPage(driver);
+    private OrderPage orderPage = new OrderPage(driver);
+    private CartPage cartPage = new CartPage(driver);
 
     @Когда("^открыто меню Доставки$")
-    public void openMainMenu() throws Throwable {
+    public void openMainMenu() {
         mainPage.clickMainMenu();
     }
 
     @И("^выбран раздел Меню Доставки \"([^\"]*)\"$")
-    public void chooseMenuItem(String text) throws Throwable {
+    public void chooseMenuItem(String text) {
         mainPage.chooseDeliveryItem(text);
     }
 
     @И("^заказан товар \"([^\"]*)\"$")
-    public void orderItem(String text) throws Throwable {
+    public void orderItem(String text) {
         orderPage.addToCart(text);
     }
 
     @И("^открыта Корзина$")
-    public void openCart() throws Throwable {
-        cartPage = new CartPage(driver, orderPage.getUserOrderList());
+    public void openCart() {
+        mainPage.openCart();
     }
 
     @Тогда("^проверить в Корзине заказанные товары$")
-    public void checkCartItems() throws Throwable {
+    public void checkCartItems() {
         cartPage.checkItemsInCart();
     }
 
     @И("^проверить общую сумму в Корзине$")
-    public void checkCartTotalSum() throws Throwable {
+    public void checkCartTotalSum() {
         cartPage.checkCartTotalSum();
     }
 
     @Когда("^очищена Корзина$")
-    public void clearCart() throws Throwable {
+    public void clearCart() {
         cartPage.clearCart();
     }
 
     @Тогда("^проверить что Корзина пуста$")
-    public void checkCartEmptiness() throws Throwable {
-        cartPage.isEmpty();
+    public void checkCartEmptiness() {
+        cartPage.isCartEmpty();
     }
 }

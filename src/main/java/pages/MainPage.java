@@ -26,7 +26,9 @@ public class MainPage extends BasePage {
     public MainPage(WebDriver driver) {
         super(driver);
 
-        if (subscriptionNoButton.isDisplayed()) click(subscriptionNoButton);
+        if (subscriptionNoButton.isDisplayed()) {
+            click(subscriptionNoButton);
+        }
     }
 
     @Step("Выбираем пункт меню {0} в главном Меню Доставки")
@@ -44,7 +46,4 @@ public class MainPage extends BasePage {
         click(cart);
     }
 
-    public boolean isPageLoaded() {
-        return false;
-    }
 }

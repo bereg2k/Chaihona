@@ -13,8 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by student on 05.11.2018.
  */
-public class BaseDefs {
-
+public class Hooks {
 
     static WebDriver driver;
     private static Properties properties = TestProperties.getInstance().getProperties();

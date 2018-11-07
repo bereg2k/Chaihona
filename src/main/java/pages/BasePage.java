@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import other.Locker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,46 +18,41 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by user on 03.11.2018.
  */
-public abstract class BasePage {
+abstract class BasePage {
 
-    public abstract boolean isPageLoaded();
+    private WebDriver driver;
+    private static Locker locker = Locker.getInstance();
 
-    WebDriver driver;
-
-    public Map<String, String> getUserOrderList() {
-        return userOrderList;
+    Locker getLocker() {
+        return locker;
     }
 
-    Map<String, String> userOrderList = new HashMap<>();
-
-    public BasePage(WebDriver driver) {
+    BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void click(WebElement element) {
+    void click(WebElement element) {
+        scroll(element);
         new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }
 
-    public void scroll(WebElement element) {
+    private void scroll(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    void waitForVisible(By locator) {
+    private void waitForVisible(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    void selectByText(WebElement element, String text) {
+    private void waitForVisible(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    private void selectByText(WebElement element, String text) {
         new Select(element).selectByVisibleText(text);
     }
 
@@ -68,18 +64,14 @@ public abstract class BasePage {
         return driver.findElement(locator);
     }
 
-    void click(By locator) {
-        waitForVisible(locator);
-        findByLocator(locator).click();
-    }
-
     void click(String xpath) {
         waitForVisible(By.xpath(xpath));
         findByXpath(xpath).click();
     }
 
     void checkElementText(WebElement element, String expectedText) {
-        assertEquals("Значения текст не соотвествует ожидаемому",
+        waitForVisible(element);
+        assertEquals("Значения текста не соотвествует ожидаемому",
                 expectedText, element.getText());
     }
 
@@ -98,13 +90,5 @@ public abstract class BasePage {
 
     boolean isElementPresented(String xpath) {
         return driver.findElements(By.xpath(xpath)).size() != 0;
-    }
-
-    void saveItemPrice(WebElement name, WebElement price) {
-        userOrderList.put(name.getText(), price.getText().substring(0, 3));
-    }
-
-    void openWebPage(String url){
-        driver.get(url);
     }
 }

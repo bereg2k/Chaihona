@@ -8,14 +8,10 @@ public class OrderPage extends BasePage {
         super(driver);
     }
 
-    @Override
-    public boolean isPageLoaded() {
-        return false;
-    }
-
     public void addToCart(String text) {
         click("//h3/a/span[contains(text(),'" + text + "')]/../../../button");
-        saveItemPrice(findByXpath("//h3/a/span[contains(text(),'" + text + "')]"),
+
+        getLocker().saveItemPrice(findByXpath("//h3/a/span[contains(text(),'" + text + "')]"),
                 findByXpath("//h3/a/span[contains(text(),'" + text + "')]/../../../div/span/span"));
     }
 }
